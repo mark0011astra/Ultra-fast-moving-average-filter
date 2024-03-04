@@ -107,3 +107,6 @@ def fast_moving_average_filter(data, window_size):
 |  | Numpy `convolve` | 0.0225 | 542.14倍高速 |
 |  | Numpy `cumsum` | 0.0053 | 2306.86倍高速 |
 
+
+## `cumsum`関数を使用すると、Python上での移動平均フィルタ処理が数千倍高速になる場合があることが示されました。
+
