@@ -6,6 +6,55 @@
 - Numpyの`convolve`関数を使用した移動平均フィルタ
 - Numpyの`cumsum`関数を使用した移動平均フィルタ
 
+## `convolve`関数
+
+`convolve`関数は、二つの配列の畳み込みを計算します。この関数は、信号処理でフィルタリングを行う場合などに有用です。移動平均フィルタを計算する際には、データ配列と、移動平均のウィンドウサイズに対応する重み配列を畳み込むことで使用されます。
+
+### 使用方法
+
+```python
+import numpy as np
+
+data = np.array([1, 2, 3, 4, 5])  # 処理するデータ
+window_size = 3  # 移動平均のウィンドウサイズ
+
+# ウィンドウサイズに対応する重み配列を作成
+weights = np.ones(window_size) / window_size
+
+# 畳み込みを使用して移動平均を計算
+moving_average = np.convolve(data, weights, 'valid')
+```
+
+### `convolve`関数の特徴
+
+- `valid`モードでは、出力サイズは入力サイズよりも小さくなります。これは、畳み込みが完全に重なる部分のみを計算するためです。
+- 計算速度が非常に速く、特にNumpyの内部最適化により大規模なデータセットに対して効率的です。
+
+## `cumsum`関数
+
+`cumsum`関数は、配列の累積和を計算します。移動平均フィルタにおいては、累積和を利用して効率的に平均値を計算することができます。
+
+### 使用方法
+
+```python
+import numpy as np
+
+data = np.array([1, 2, 3, 4, 5])  # 処理するデータ
+window_size = 3  # 移動平均のウィンドウサイズ
+
+# データの累積和を計算
+cumulative_sum = np.cumsum(np.insert(data, 0, 0))
+
+# 累積和を使用して移動平均を計算
+moving_average = (cumulative_sum[window_size:] - cumulative_sum[:-window_size]) / window_size
+```
+
+### `cumsum`関数の特徴
+
+- 大規模なデータセットや大きなウィンドウサイズでの計算に非常に効率的です。
+- `cumsum`を使用することで、計算の複雑さを大幅に削減し、計算速度を向上させることができます。
+- 累積和を利用することで、連続するデータポイント間の平均値を繰り返し計算する必要がなくなります。
+
 ## 移動平均フィルタの実装
 
 ### 移動平均フィルタ（Pythonのみ使用）
